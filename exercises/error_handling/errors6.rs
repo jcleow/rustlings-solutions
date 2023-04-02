@@ -8,7 +8,6 @@
 
 // Execute `rustlings hint errors6` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 use std::num::ParseIntError;
 
@@ -25,13 +24,27 @@ impl ParsePosNonzeroError {
     }
     // TODO: add another error conversion function here.
     // fn from_parseint...
+    fn from_parseint(err: ParseIntError) -> ParsePosNonzeroError {
+        ParsePosNonzeroError::ParseInt(err)
+    }
 }
+
 
 fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroError> {
     // TODO: change this to return an appropriate error instead of panicking
     // when `parse()` returns an error.
-    let x: i64 = s.parse().unwrap();
-    PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation)
+
+    //s.parse().unwrap() returns an ok value and if not it panics with the error message in the Err variant ie not graceful
+    //s.parse().map_err() is more graceful as it still returns a Result<Ok, Err>
+
+    // The ? operator performs a propagation of error. If the following line is ok, it continues
+    // if not it early returns.
+
+
+    let x: i64 = s.parse().map_err(ParsePosNonzeroError::from_parseint)?;
+    PositiveNonzeroInteger::new(x)
+        .map_err(ParsePosNonzeroError::from_creation)
+
 }
 
 // Don't change anything below this line.

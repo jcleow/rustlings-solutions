@@ -5,10 +5,10 @@
 // from the std::time module. Bonus style points if you can do it with one line!
 // Execute `rustlings hint modules3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 // TODO: Complete this use statement
-use ???
+// This is using nested paths
+use std::{time:: SystemTime, time::UNIX_EPOCH};
+// or use std::time::* // glob operator
 
 fn main() {
     match SystemTime::now().duration_since(UNIX_EPOCH) {
